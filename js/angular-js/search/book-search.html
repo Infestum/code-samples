@@ -1,0 +1,57 @@
+<div class="search-module">
+
+    <form class="module-control"
+          name="search"
+          ng-submit="$ctrl.refreshContentSearch()">
+
+        <div class="field text">
+
+            <input class="form-control"
+                   type="text"
+                   name="query"
+                   ng-model="$ctrl.searchTxt"
+                   ng-minlength="$ctrl.minKeywordLength"
+                   uib-tooltip="{{'Minimum ' + $ctrl.minKeywordLength + ' chars'}}"
+                   tooltip-enable="search.query.$error.minlength"
+                   tooltip-is-open="search.query.$error.minlength"
+                   tooltip-placement="top"
+                   tooltip-trigger="none"
+                   placeholder="{{ 'type_to_search' | translate }}&hellip;">
+
+            <button type="submit"
+                    class="cta-search btn-link"
+                    aria-label="Search">
+                <i class="icn-search"></i>
+            </button>
+        </div>
+    </form>
+
+    <div class="module-header">
+        <p class="search-results-title"
+           ng-if="$ctrl.searchResults">
+            <span>{{ $ctrl.searchResultsTotal }}</span> {{ 'results_found' | translate }}
+        </p>
+    </div>
+
+    <div class="module-body">
+        <div class="search-result-item" ng-repeat="item in $ctrl.searchResults[$ctrl.searchCurrPage]">
+            <p class="title-txt">
+                <a href=""
+                   ng-href="{{ item.href }}">
+                    <span ng-bind-html="item.title"></span>
+                </a>
+            </p>
+            <p class="body-txt" ng-bind-html="item.body"></p>
+        </div>
+    </div>
+
+    <div class="module-footer" ng-if="$ctrl.searchResults">
+        <span class="pagination-txt">{{ 'page' | translate }}</span>
+        <span class="pagination-index"
+              ng-repeat="page in $ctrl.searchResults"
+              ng-class="{active: $ctrl.searchCurrPage == $index}"
+              ng-click="$ctrl.switchToSearchPage($index)">
+            {{ $index + 1 }}
+        </span>
+    </div>
+</div>

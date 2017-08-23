@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <h3 class="modal-title">Version {{ ::$ctrl.book.version }}</h3>
+</div>
+
+<div class="modal-body">
+
+    <div ng-if="::$ctrl.editable">
+        <textarea ng-model="$ctrl.book.note"></textarea>
+
+        <p>Choose recently updated sections:</p>
+    </div>
+
+    <div ng-if="::(!$ctrl.editable)">
+        <p>{{ $ctrl.book.note }}</p>
+
+        <p ng-if="::(!$ctrl.emptyBook)">Recently updated sections:</p>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div ng-if="::$ctrl.preface.length > 0">
+                <h2>{{ 'preface' | translate }}</h2>
+                <ol class="book-section-list book-contents">
+                    <li ng-repeat="section in ::$ctrl.preface"
+                        ng-class="{selected: $ctrl.highlighted[section.id]}">
+                        <book-section-list-item model="section"
+                                                selectable="::$ctrl.editable"
+                                                expanded="::(!$ctrl.editable)"
+                                                selected="$ctrl.highlighted"></book-section-list-item>
+                    </li>
+                </ol>
+            </div>
+
+            <div ng-if="::$ctrl.chapter.length > 0">
+                <h2>{{ 'chapters' | translate }}</h2>
+                <ol class="book-section-list book-contents">
+                    <li ng-repeat="section in ::$ctrl.chapter"
+                        ng-class="{selected: $ctrl.highlighted[section.id]}">
+                        <book-section-list-item model="section"
+                                                selectable="::$ctrl.editable"
+                                                expanded="::(!$ctrl.editable)"
+                                                selected="$ctrl.highlighted"></book-section-list-item>
+                    </li>
+                </ol>
+            </div>
+
+            <div ng-if="::$ctrl.appendix.length > 0">
+                <h2>{{ 'appendix' | translate }}</h2>
+                <ol class="book-section-list book-contents">
+                    <li ng-repeat="section in ::$ctrl.appendix"
+                        ng-class="{selected: $ctrl.highlighted[section.id]}">
+                        <book-section-list-item model="section"
+                                                selectable="::$ctrl.editable"
+                                                expanded="::(!$ctrl.editable)"
+                                                selected="$ctrl.highlighted"></book-section-list-item>
+                    </li>
+                </ol>
+            </div>
+
+            <div ng-if="::$ctrl.emptyBook">{{ 'no_sections' | translate }}</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="$dismiss()">Close</button>
+
+    <button ng-if="::$ctrl.editable"
+            class="btn btn-primary"
+            ng-click="$ctrl.save()">Save</button>
+</div>
